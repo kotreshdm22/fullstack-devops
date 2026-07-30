@@ -19,6 +19,9 @@ jobs:
           distribution: temurin
           java-version: 21
 
+      - name: Make mvnw executable
+        run: chmod +x backend/mvnw
+
       - name: Build Spring Boot
         working-directory: backend
         run: ./mvnw clean package
