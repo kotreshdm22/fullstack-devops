@@ -8,6 +8,11 @@ public class HelloController {
 
     @GetMapping("/api/hello")
     public String hello() {
-        return "Hello from Spring Boot!886";
+        return "Hello from Spring Boot!999";
+    }
+
+     @GetMapping("/api/hello-test")
+    public String helloTest() {
+        return "Hello from Spring Boot!test";
     }
 }
