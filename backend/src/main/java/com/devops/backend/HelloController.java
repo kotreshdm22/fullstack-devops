@@ -8,7 +8,7 @@ public class HelloController {
 
     @GetMapping("/api/hello")
     public String hello() {
-        return "Hello from Spring Boot!999";
+        return "API Working....";
     }
 
      @GetMapping("/api/hello-test")

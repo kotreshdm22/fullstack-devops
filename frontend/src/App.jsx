@@ -1,13 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 function App() {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
-    fetch('http://localhost:8090/api/hello')
-      .then((res) => res.text())
-      .then((data) => setMessage(data))
-      .catch(() => setMessage('Backend not running'));
+    const timer = setInterval(() => {
+      fetch("http://localhost:8090/api/hello")
+        .then((res) => res.text())
+        .then((data) => setMessage(`${data} ${new Date().toLocaleString()}`))
+        .catch(() => setMessage("Backend not running"));
+    }, 3000);
+
+    return () => clearInterval(timer);
   }, []);
 
   return (
