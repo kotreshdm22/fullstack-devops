@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+commit_msg=$(cat "$1")
+
+pattern='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert): .+'
+
+if ! echo "$commit_msg" | grep -Eq "$pattern"; then
+    echo ""
+    echo "❌ Invalid commit message."
+    echo ""
+    echo "Use:"
+    echo ""
+    echo "  fix: footer links not visible"
+    echo "  feat: add login page"
+    echo "  chore: update dependencies"
+    echo ""
+    exit 1
+fi

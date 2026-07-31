@@ -1,0 +1,42 @@
+npm test
+#!/usr/bin/env sh
+
+echo "Running pre-commit checks..."
+
+###################################
+# React Checks
+###################################
+
+if [ -d "frontend" ]; then
+    echo "Checking React application..."
+
+    cd frontend || exit 1
+
+    npm run lint || exit 1
+
+    npm run test -- --run || exit 1
+
+    npm run build || exit 1
+
+    cd ..
+fi
+
+###################################
+# Spring Boot Checks
+###################################
+
+if [ -d "backend" ]; then
+    echo "Checking Spring Boot application..."
+
+    cd backend || exit 1
+
+    if [ -f "./mvnw" ]; then
+        ./mvnw clean test || exit 1
+    else
+        mvn clean test || exit 1
+    fi
+
+    cd ..
+fi
+
+echo "✅ All checks passed."
