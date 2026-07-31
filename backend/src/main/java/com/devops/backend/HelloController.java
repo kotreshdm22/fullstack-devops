@@ -1,3 +1,5 @@
+package com.devops.backend.controller;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,7 +13,7 @@ public class HelloController {
     @GetMapping("/api/hello")
     public Map<String, Object> hello() {
         String currentDateTime = LocalDateTime.now()
-            .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+                .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 
         return Map.of(
                 "message", "API is working",
