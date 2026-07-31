@@ -35,15 +35,15 @@ function App() {
   }, []);
 
   useEffect(() => {
-    fetchApi();
-  }, [fetchApi]);
-
-  useEffect(() => {
     if (timerRef.current) {
       clearInterval(timerRef.current);
     }
 
     if (isRunning) {
+      // Initial API call
+      fetchApi();
+
+      // Start interval
       timerRef.current = setInterval(fetchApi, intervalMs);
     }
 
@@ -53,7 +53,6 @@ function App() {
       }
     };
   }, [fetchApi, intervalMs, isRunning]);
-
   return (
     <div
       style={{
