@@ -71,7 +71,7 @@ jobs:
       - name: Build Backend Image
         run: |
           docker build \
-            -t $BACKEND_IMAGE:mian \
+            -t $BACKEND_IMAGE:main \
             -t $BACKEND_IMAGE:$IMAGE_TAG \
             ./backend
 
