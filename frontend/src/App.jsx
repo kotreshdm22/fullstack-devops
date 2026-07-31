@@ -7,9 +7,9 @@ function App() {
     const timer = setInterval(() => {
       fetch("http://localhost:8090/api/hello")
         .then((res) => res.text())
-        .then((data) => setMessage(`${data} ${new Date().toLocaleString()}`))
+        .then((data) => setMessage(`${data.message} -  ${data.timestamp}`))
         .catch(() => setMessage("Backend not running"));
-    }, 3000);
+    }, 9000);
 
     return () => clearInterval(timer);
   }, []);
