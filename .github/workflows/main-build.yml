@@ -1,9 +1,9 @@
-name: Develop - Build & Push Docker Images
+name: Main - Build & Push Docker Images
 
 on:
   push:
     branches:
-      - develop
+      - main
 
 env:
   BACKEND_IMAGE: kotreshdm/springboot-api
@@ -71,13 +71,13 @@ jobs:
       - name: Build Backend Image
         run: |
           docker build \
-            -t $BACKEND_IMAGE:develop \
+            -t $BACKEND_IMAGE:mian \
             -t $BACKEND_IMAGE:$IMAGE_TAG \
             ./backend
 
       - name: Push Backend Image
         run: |
-          docker push $BACKEND_IMAGE:develop
+          docker push $BACKEND_IMAGE:main
           docker push $BACKEND_IMAGE:$IMAGE_TAG
 
       ###################################################
@@ -86,19 +86,19 @@ jobs:
       - name: Build Frontend Image
         run: |
           docker build \
-            -t $FRONTEND_IMAGE:develop \
+            -t $FRONTEND_IMAGE:main \
             -t $FRONTEND_IMAGE:$IMAGE_TAG \
             ./frontend
 
       - name: Push Frontend Image
         run: |
-          docker push $FRONTEND_IMAGE:develop
+          docker push $FRONTEND_IMAGE:main
           docker push $FRONTEND_IMAGE:$IMAGE_TAG
 
       ###################################################
       # Cleanup
       ###################################################
-      - name: Cleanup old Docker Hub develop tags
+      - name: Cleanup old Docker Hub mian tags
         if: always()
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
