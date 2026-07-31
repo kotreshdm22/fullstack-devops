@@ -99,6 +99,29 @@ jobs:
         run: |
           docker push kotreshdm/react-app:develop
 
+      - name: Cleanup old Docker Hub develop tags
+        if: always()
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          set -e
+          apt-get update && apt-get install -y jq
+          repos=("springboot-api" "react-app")
+          for repo in "${repos[@]}"; do
+            echo "Cleaning up old develop tags for $repo"
+            tags=$(curl -sSf -u "$DOCKER_USERNAME:$DOCKER_PASSWORD" "https://hub.docker.com/v2/repositories/kotreshdm/$repo/tags/?page_size=100" \
+              | jq -r '.results[] | select(.name | startswith("develop")) | [.name, .last_updated] | @tsv' \
+              | sort -k2r \
+              | cut -f1)
+            echo "$tags" | tail -n +6 | while read -r tag; do
+              if [ -n "$tag" ]; then
+                echo "Deleting $repo:$tag"
+                curl -sSf -u "$DOCKER_USERNAME:$DOCKER_PASSWORD" -X DELETE "https://hub.docker.com/v2/repositories/kotreshdm/$repo/tags/$tag/"
+              fi
+            done
+          done
+
       # -----------------------------
       # Done
       # -----------------------------
